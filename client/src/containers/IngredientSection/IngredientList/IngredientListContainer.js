@@ -10,6 +10,7 @@ const IngredientListContainer = ({ ingredients }) => {
 
     return (
         <div className="ingredient-list">
+            <h2>Ingredient List</h2>
             {IngredientListItems}
         </div>
 

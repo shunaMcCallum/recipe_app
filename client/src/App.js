@@ -5,9 +5,10 @@ import Request from './helpers/request';
 import HomePage from './containers/HomePage/HomePage';
 import NavBar from './components/NavBar/NavBar';
 import RecipeContainer from './containers/RecipeSection/RecipeContainer';
-import IngredientContainer from './containers/IngredientSection/IngredientContainer';
 import SelectedRecipe from './containers/RecipeSection/SelectedRecipe/SelectedRecipe';
+import IngredientContainer from './containers/IngredientSection/IngredientContainer';
 import SelectedIngredient from './containers/IngredientSection/SelectedIngredient/SelectedIngredient';
+import IngredientForm from './containers/IngredientSection/CreateIngredient/IngredientForm';
 
 function App() {
 
@@ -52,13 +53,18 @@ function App() {
   const IngredientWrapper = () => {
     const { id } = useParams();
     let foundIngredient = findIngredientById(id);
-    console.log(foundIngredient);
     return <SelectedIngredient ingredient={foundIngredient} />;
   }
 
   const getIngredients = () => {
     Request.get('http://localhost:8080/ingredients/')
     .then(ingredientsData => setIngredients(ingredientsData))
+  }
+
+  const createIngredient = (ingredient) => {
+    console.log("create ingredient called", ingredient);
+    Request.post('http://localhost:8080/ingredients/', ingredient)
+    .then(() => window.location = '/ingredients/');
   }
 
   return (
@@ -71,6 +77,7 @@ function App() {
           <Route path="/recipes/:id" element={<RecipeWrapper />} />
           <Route exact path="/ingredients" element={<IngredientContainer ingredients={ingredients} />} />
           <Route path="/ingredients/:id" element={<IngredientWrapper />} />
+          <Route exact path="/ingredients/new" element={<IngredientForm onCreate={createIngredient} />} />
         </Routes>
       </Router>
     </div>

@@ -26,4 +26,5 @@ public class RecipeController {
     public ResponseEntity getRecipe(@PathVariable Long id) {
         return new ResponseEntity<>(recipeRepository.findById(id), HttpStatus.OK);
     }
+
 }
