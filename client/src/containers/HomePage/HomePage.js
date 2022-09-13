@@ -1,10 +1,10 @@
 import React from 'react';
-import './HomePage.css';
+import './HomePage.scss';
 
 const HomePage = () => {
 
     return (
-        <h1>Hello World!</h1>
+        <h1>Welcome to my Recipe App</h1>
     )
 }
 

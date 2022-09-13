@@ -1,4 +1,27 @@
-.App {
+@font-face {
+  font-family: "catamaran";
+  src: url("../public/assets/fonts/Catamaran-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "tajawal";
+  src: url("../public/assets/fonts/Tajawal-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "telex";
+  src: url("../public/assets/fonts/Telex-Regular.ttf") format("truetype");
+}
+
+.app-container {
   text-align: center;
+  font-family: telex;
+
+  min-height: 100vh;
+  min-width: 120vh;
+
+  /* border-style: solid;
+  border-width: 2px;
+  border-color: black; */
 }
 
