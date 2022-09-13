@@ -1,13 +1,13 @@
 import React from 'react';
 
-const IngredientListItem = ({ingredient}) => {
+const RecipeIngredientListItem = ({ingredient}) => {
   
 
     return (
-        <div>
+        <div className="recipe-ingredient-list-item">
             <p>{ingredient.ingredient.name} - {ingredient.measurement} {ingredient.measurementType}, {ingredient.preparation}</p>
         </div>
     )
 }
 
-export default IngredientListItem;
+export default RecipeIngredientListItem;

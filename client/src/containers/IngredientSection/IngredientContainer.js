@@ -1,12 +1,14 @@
 import React from 'react';
+import './IngredientContainer.scss';
+import IngredientListContainer from './IngredientList/IngredientListContainer';
 
 const IngredientContainer = ({ ingredients }) => {
 
 
     return (
-        <div>
-            <h1>Recipes</h1>
-            {console.log(ingredients)}
+        <div className="ingredient-container">
+            <h1>Ingredients Section</h1>
+            <IngredientListContainer ingredients={ingredients} />
         </div>
     )
 }

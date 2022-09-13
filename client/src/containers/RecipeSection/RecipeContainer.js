@@ -6,7 +6,7 @@ const RecipeContainer = ({recipes}) => {
   
 
     return (
-        <div>
+        <div className="recipe-container">
             <h1>Recipes Section</h1>
             <RecipeListContainer recipes={recipes} />
         </div>

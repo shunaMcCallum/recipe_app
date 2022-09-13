@@ -9,12 +9,10 @@ const RecipeListContainer = ({recipes}) => {
     })
 
     return (
-        <>
-            <div>
-                <h2>Recipe List</h2>
-                {recipeListItems}
-            </div>
-        </>
+        <div className="recipe-list">
+            <h2>Recipe List</h2>
+            {recipeListItems}
+        </div>
         
     )
 }

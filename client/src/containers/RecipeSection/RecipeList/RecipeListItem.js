@@ -7,8 +7,7 @@ const RecipeListItem = ({ recipe }) => {
     const url = "/recipes/" + recipe.id;
     
     return (
-        <div>
-            <h3>{recipe.name}</h3>
+        <div className="recipe-list-item">
             <Link to={url}>{recipe.name}</Link>
         </div>
     )

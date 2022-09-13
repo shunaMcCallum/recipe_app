@@ -8,7 +8,7 @@ const InstructionList = ({instructionList}) => {
     })
 
     return (
-        <div>
+        <div className="instruction-list">
             {instructionItems}
         </div>
     )

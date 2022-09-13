@@ -4,7 +4,7 @@ const InstructionListItem = ({instruction}) => {
 
 
     return (
-        <div>
+        <div className="instruction-item">
             <p>{instruction}</p>
         </div>
     )

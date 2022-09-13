@@ -1,5 +1,5 @@
 import React from 'react';
-import IngredientList from './IngredientList';
+import RecipeIngredientList from './RecipeIngredientList';
 import InstructionList from './InstructionList';
 
 const SelectedRecipe = ({recipe}) => {
@@ -7,12 +7,12 @@ const SelectedRecipe = ({recipe}) => {
     const calories = Math.round(recipe.calories);
 
     return (
-        <div>
+        <div className="selected-recipe">
             <h1>{recipe.name}</h1>
             <p>Calories: {calories} kcal</p>
             <p>Cooking Time: {recipe.cooking_time} mins</p>
             <div>
-                <IngredientList ingredientList={recipe.preparedIngredients} />
+                <RecipeIngredientList ingredientList={recipe.preparedIngredients} />
                 <InstructionList instructionList={recipe.instructions} />
             </div>
         </div>
