@@ -29,7 +29,7 @@ public class Recipe {
 
     @JsonIgnoreProperties({"recipes"})
     @OneToMany(mappedBy="recipe", fetch = FetchType.LAZY)
-    private List<PreparedIngredient> prepared_ingredients;
+    private List<PreparedIngredient> preparedIngredients;
     @Column(name="cooking_time")
     private int cooking_time;
     @Column(name="instructions")
@@ -37,12 +37,12 @@ public class Recipe {
     @Column(name="tags")
     private ArrayList<Tags> tags;
 
-    public Recipe (String name, Meal meal, int cooking_time) {
+    public Recipe (String name, Meal meal, int cooking_time, int portions) {
         this.name = name;
         this.meal = meal;
         this.calories = 0.0;
-        this.portions = 1;
-        this.prepared_ingredients = new ArrayList<>();
+        this.portions = portions;
+        this.preparedIngredients = new ArrayList<>();
         this.cooking_time = cooking_time;
         this.instructions = new ArrayList<>();
         this.tags = new ArrayList<>();
@@ -125,32 +125,22 @@ public class Recipe {
     }
 
     public List<PreparedIngredient> getPreparedIngredients() {
-        return prepared_ingredients;
+        return preparedIngredients;
     }
 
     public void setPreparedIngredients(List<PreparedIngredient> preparedIngredients) {
-        this.prepared_ingredients = preparedIngredients;
+        this.preparedIngredients = preparedIngredients;
     }
 
-//    public ArrayList<Ingredient> getIngredientList() {
-//        ArrayList<Ingredient> result = new ArrayList<>();
-//
-//        for (int i = 0; i < this.prepared_ingredients.size(); i++) {
-//            result.add(this.prepared_ingredients.get(i).getIngredient());
-//        }
-//
-//        return result;
-//    }
-
-    public void addPreparedIngredient(PreparedIngredient prepared_ingredient) {
-        this.prepared_ingredients.add(prepared_ingredient);
+    public void addPreparedIngredient(PreparedIngredient preparedIngredient) {
+        this.preparedIngredients.add(preparedIngredient);
     }
 
     public Double calculateTotalCalories() {
         Double total = 0.00;
 
-        for (int i = 0; i < this.prepared_ingredients.size(); i++) {
-            total += this.prepared_ingredients.get(i).getCaloriesPerPreparedIngredient() * this.portions;
+        for (int i = 0; i < this.preparedIngredients.size(); i++) {
+            total += this.preparedIngredients.get(i).getCaloriesPerPreparedIngredient() * this.portions;
         }
         return total;
     }

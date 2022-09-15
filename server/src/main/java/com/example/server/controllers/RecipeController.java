@@ -1,5 +1,6 @@
 package com.example.server.controllers;
 
+import com.example.server.models.Ingredient;
 import com.example.server.models.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/recipes")
 @CrossOrigin
+
 public class RecipeController {
 
     @Autowired
@@ -25,6 +27,19 @@ public class RecipeController {
     @GetMapping(value = "/{id}")
     public ResponseEntity getRecipe(@PathVariable Long id) {
         return new ResponseEntity<>(recipeRepository.findById(id), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/")
+    public ResponseEntity<Recipe> postRecipe(@RequestBody Recipe recipe){
+        recipeRepository.save(recipe);
+        return new ResponseEntity<>(recipe, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Recipe> deleteRecipe(@PathVariable Long id) {
+        Recipe found = recipeRepository.getOne(id);
+        recipeRepository.delete(found);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
 }

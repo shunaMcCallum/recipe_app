@@ -16,6 +16,8 @@ import com.example.server.models.Enums.Tags;
 import com.example.server.models.Ingredient;
 import com.example.server.repositories.RecipeRepository;
 
+import java.util.ArrayList;
+
 @Profile("!test") //Run every time EXCEPT Tests
 @Component
 public class DataLoader implements ApplicationRunner {
@@ -72,7 +74,7 @@ public class DataLoader implements ApplicationRunner {
         Ingredient whiteRice = new Ingredient("white rice", IngredientType.Carb, 1.29, Measurement.grams);
         ingredientRepository.save(whiteRice);
 
-        Recipe recipe = new Recipe("Roast Aubergine & Coconut Curry", Meal.Dinner, 65);
+        Recipe recipe = new Recipe("Roast Aubergine & Coconut Curry", Meal.Dinner, 65, 1);
         recipeRepository.save(recipe);
 
         PreparedIngredient ingredient1 = new PreparedIngredient(aubergine, 200.0, Measurement.grams, "chopped into quarters", recipe);
@@ -114,31 +116,49 @@ public class DataLoader implements ApplicationRunner {
         PreparedIngredient ingredient13 = new PreparedIngredient(onion, 80.0, Measurement.grams, "chopped", recipe);
         preparedIngredientRepository.save(ingredient13);
 
-        recipe.addPreparedIngredient(ingredient1);
-        recipeRepository.save(recipe);
-        recipe.addPreparedIngredient(ingredient2);
-        recipeRepository.save(recipe);
-        recipe.addPreparedIngredient(ingredient3);
-        recipeRepository.save(recipe);
-        recipe.addPreparedIngredient(ingredient4);
-        recipeRepository.save(recipe);
-        recipe.addPreparedIngredient(ingredient5);
-        recipeRepository.save(recipe);
-        recipe.addPreparedIngredient(ingredient6);
-        recipeRepository.save(recipe);
-        recipe.addPreparedIngredient(ingredient7);
-        recipeRepository.save(recipe);
-        recipe.addPreparedIngredient(ingredient8);
-        recipeRepository.save(recipe);
-        recipe.addPreparedIngredient(ingredient9);
-        recipeRepository.save(recipe);
-        recipe.addPreparedIngredient(ingredient10);
-        recipeRepository.save(recipe);
-        recipe.addPreparedIngredient(ingredient11);
-        recipeRepository.save(recipe);
-        recipe.addPreparedIngredient(ingredient12);
-        recipeRepository.save(recipe);
-        recipe.addPreparedIngredient(ingredient13);
+        ArrayList<PreparedIngredient> ingredientList = new ArrayList<>();
+        ingredientList.add(ingredient1);
+        ingredientList.add(ingredient2);
+        ingredientList.add(ingredient3);
+        ingredientList.add(ingredient4);
+        ingredientList.add(ingredient5);
+        ingredientList.add(ingredient6);
+        ingredientList.add(ingredient7);
+        ingredientList.add(ingredient8);
+        ingredientList.add(ingredient9);
+        ingredientList.add(ingredient10);
+        ingredientList.add(ingredient11);
+        ingredientList.add(ingredient12);
+        ingredientList.add(ingredient13);
+
+//        recipe.addPreparedIngredient(ingredient1);
+//        recipeRepository.save(recipe);
+//        recipe.addPreparedIngredient(ingredient2);
+//        recipeRepository.save(recipe);
+//        recipe.addPreparedIngredient(ingredient3);
+//        recipeRepository.save(recipe);
+//        recipe.addPreparedIngredient(ingredient4);
+//        recipeRepository.save(recipe);
+//        recipe.addPreparedIngredient(ingredient5);
+//        recipeRepository.save(recipe);
+//        recipe.addPreparedIngredient(ingredient6);
+//        recipeRepository.save(recipe);
+//        recipe.addPreparedIngredient(ingredient7);
+//        recipeRepository.save(recipe);
+//        recipe.addPreparedIngredient(ingredient8);
+//        recipeRepository.save(recipe);
+//        recipe.addPreparedIngredient(ingredient9);
+//        recipeRepository.save(recipe);
+//        recipe.addPreparedIngredient(ingredient10);
+//        recipeRepository.save(recipe);
+//        recipe.addPreparedIngredient(ingredient11);
+//        recipeRepository.save(recipe);
+//        recipe.addPreparedIngredient(ingredient12);
+//        recipeRepository.save(recipe);
+//        recipe.addPreparedIngredient(ingredient13);
+//        recipeRepository.save(recipe);
+
+        recipe.setPreparedIngredients(ingredientList);
         recipeRepository.save(recipe);
 
         recipe.addInstruction("1. Heat the oven. Spread out the aubergine on a roasting tin and drizzle with the oil and some seasoning. Roast for 15-20 mins.");

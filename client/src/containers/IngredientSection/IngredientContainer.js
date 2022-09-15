@@ -9,6 +9,7 @@ const IngredientContainer = ({ ingredients }) => {
     const handleCreateButtonClick = () => {
         navigate('/ingredients/new')
     }
+
     return (
         <div className="ingredient-container">
             <h1>Ingredients Section</h1>

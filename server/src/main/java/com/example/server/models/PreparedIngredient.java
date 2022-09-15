@@ -29,7 +29,7 @@ public class PreparedIngredient {
     private String preparation;
 
     @ManyToOne
-    @JoinColumn(name="recipe_id", nullable = false)
+    @JoinColumn(name="recipe_id", nullable = true)
     @JsonBackReference
     private Recipe recipe;
 
@@ -42,6 +42,7 @@ public class PreparedIngredient {
         this.measurementType = measurementType;
         this.preparation = preparation;
         this.recipe = recipe;
+//        this.caloriesPerPreparedIngredient = 0.0;
         this.setCaloriesPerPreparedIngredient();
     }
 
@@ -94,7 +95,7 @@ public class PreparedIngredient {
     }
 
     public void setCaloriesPerPreparedIngredient() {
-        this.caloriesPerPreparedIngredient = this.getIngredient().getCalories() * this.measurement;
+        this.caloriesPerPreparedIngredient = Math.floor(this.getIngredient().getCalories() * this.measurement);
     }
 
     public Double getCaloriesPerPreparedIngredient() {
