@@ -74,62 +74,80 @@ public class DataLoader implements ApplicationRunner {
         Ingredient whiteRice = new Ingredient("white rice", IngredientType.Carb, 1.29, Measurement.grams);
         ingredientRepository.save(whiteRice);
 
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(aubergine);
+        ingredients.add(coconutOil);
+        ingredients.add(onion);
+        ingredients.add(ginger);
+        ingredients.add(garlic);
+        ingredients.add(redChilli);
+        ingredients.add(turmeric);
+        ingredients.add(groundCoriander);
+        ingredients.add(cardamom);
+        ingredients.add(tomato);
+        ingredients.add(coconutMilk);
+        ingredients.add(coriander);
+        ingredients.add(whiteRice);
+
         Recipe recipe = new Recipe("Roast Aubergine & Coconut Curry", Meal.Dinner, 65, 1);
         recipeRepository.save(recipe);
 
-        PreparedIngredient ingredient1 = new PreparedIngredient(aubergine, 200.0, Measurement.grams, "chopped into quarters", recipe);
-        preparedIngredientRepository.save(ingredient1);
+        recipe.setIngredients(ingredients);
+        recipeRepository.save(recipe);
 
-        PreparedIngredient ingredient2 = new PreparedIngredient(coconutOil, 7.5, Measurement.grams, " ", recipe);
-        preparedIngredientRepository.save(ingredient2);
+//        PreparedIngredient ingredient1 = new PreparedIngredient(aubergine, 200.0, Measurement.grams, "chopped into quarters", recipe);
+//        preparedIngredientRepository.save(ingredient1);
+//
+//        PreparedIngredient ingredient2 = new PreparedIngredient(coconutOil, 7.5, Measurement.grams, " ", recipe);
+//        preparedIngredientRepository.save(ingredient2);
+//
+//        PreparedIngredient ingredient3 = new PreparedIngredient(ginger, 1.25, Measurement.grams, "thumb piece grated", recipe);
+//        preparedIngredientRepository.save(ingredient3);
+//
+//        PreparedIngredient ingredient4 = new PreparedIngredient(garlic, 0.9, Measurement.grams, "crushed", recipe);
+//        preparedIngredientRepository.save(ingredient4);
+//
+//        PreparedIngredient ingredient5 = new PreparedIngredient(redChilli, 4.0, Measurement.grams, "deseeded and chopped", recipe);
+//        preparedIngredientRepository.save(ingredient5);
+//
+//        PreparedIngredient ingredient6 = new PreparedIngredient(turmeric, 1.25, Measurement.grams, " ", recipe);
+//        preparedIngredientRepository.save(ingredient6);
+//
+//        PreparedIngredient ingredient7 = new PreparedIngredient(groundCoriander, 2.5, Measurement.grams, "2 tsp", recipe);
+//        preparedIngredientRepository.save(ingredient7);
+//
+//        PreparedIngredient ingredient8 = new PreparedIngredient(cardamom, 1.0, Measurement.grams, "crushed", recipe);
+//        preparedIngredientRepository.save(ingredient8);
+//
+//        PreparedIngredient ingredient9 = new PreparedIngredient(tomato, 250.0, Measurement.grams, "roughly chopped", recipe);
+//        preparedIngredientRepository.save(ingredient9);
+//
+//        PreparedIngredient ingredient10 = new PreparedIngredient(coconutMilk, 100.0, Measurement.millilitres, " ", recipe);
+//        preparedIngredientRepository.save(ingredient10);
+//
+//        PreparedIngredient ingredient11 = new PreparedIngredient(coriander, 5.0, Measurement.grams, "chopped", recipe);
+//        preparedIngredientRepository.save(ingredient11);
+//
+//        PreparedIngredient ingredient12 = new PreparedIngredient(whiteRice, 50.0, Measurement.grams, " ", recipe);
+//        preparedIngredientRepository.save(ingredient12);
+//
+//        PreparedIngredient ingredient13 = new PreparedIngredient(onion, 80.0, Measurement.grams, "chopped", recipe);
+//        preparedIngredientRepository.save(ingredient13);
 
-        PreparedIngredient ingredient3 = new PreparedIngredient(ginger, 1.25, Measurement.grams, "thumb piece grated", recipe);
-        preparedIngredientRepository.save(ingredient3);
-
-        PreparedIngredient ingredient4 = new PreparedIngredient(garlic, 0.9, Measurement.grams, "crushed", recipe);
-        preparedIngredientRepository.save(ingredient4);
-
-        PreparedIngredient ingredient5 = new PreparedIngredient(redChilli, 4.0, Measurement.grams, "deseeded and chopped", recipe);
-        preparedIngredientRepository.save(ingredient5);
-
-        PreparedIngredient ingredient6 = new PreparedIngredient(turmeric, 1.25, Measurement.grams, " ", recipe);
-        preparedIngredientRepository.save(ingredient6);
-
-        PreparedIngredient ingredient7 = new PreparedIngredient(groundCoriander, 2.5, Measurement.grams, "2 tsp", recipe);
-        preparedIngredientRepository.save(ingredient7);
-
-        PreparedIngredient ingredient8 = new PreparedIngredient(cardamom, 1.0, Measurement.grams, "crushed", recipe);
-        preparedIngredientRepository.save(ingredient8);
-
-        PreparedIngredient ingredient9 = new PreparedIngredient(tomato, 250.0, Measurement.grams, "roughly chopped", recipe);
-        preparedIngredientRepository.save(ingredient9);
-
-        PreparedIngredient ingredient10 = new PreparedIngredient(coconutMilk, 100.0, Measurement.millilitres, " ", recipe);
-        preparedIngredientRepository.save(ingredient10);
-
-        PreparedIngredient ingredient11 = new PreparedIngredient(coriander, 5.0, Measurement.grams, "chopped", recipe);
-        preparedIngredientRepository.save(ingredient11);
-
-        PreparedIngredient ingredient12 = new PreparedIngredient(whiteRice, 50.0, Measurement.grams, " ", recipe);
-        preparedIngredientRepository.save(ingredient12);
-
-        PreparedIngredient ingredient13 = new PreparedIngredient(onion, 80.0, Measurement.grams, "chopped", recipe);
-        preparedIngredientRepository.save(ingredient13);
-
-        ArrayList<PreparedIngredient> ingredientList = new ArrayList<>();
-        ingredientList.add(ingredient1);
-        ingredientList.add(ingredient2);
-        ingredientList.add(ingredient3);
-        ingredientList.add(ingredient4);
-        ingredientList.add(ingredient5);
-        ingredientList.add(ingredient6);
-        ingredientList.add(ingredient7);
-        ingredientList.add(ingredient8);
-        ingredientList.add(ingredient9);
-        ingredientList.add(ingredient10);
-        ingredientList.add(ingredient11);
-        ingredientList.add(ingredient12);
-        ingredientList.add(ingredient13);
+//        ArrayList<PreparedIngredient> ingredientList = new ArrayList<>();
+//        ingredientList.add(ingredient1);
+//        ingredientList.add(ingredient2);
+//        ingredientList.add(ingredient3);
+//        ingredientList.add(ingredient4);
+//        ingredientList.add(ingredient5);
+//        ingredientList.add(ingredient6);
+//        ingredientList.add(ingredient7);
+//        ingredientList.add(ingredient8);
+//        ingredientList.add(ingredient9);
+//        ingredientList.add(ingredient10);
+//        ingredientList.add(ingredient11);
+//        ingredientList.add(ingredient12);
+//        ingredientList.add(ingredient13);
 
 //        recipe.addPreparedIngredient(ingredient1);
 //        recipeRepository.save(recipe);
@@ -158,8 +176,8 @@ public class DataLoader implements ApplicationRunner {
 //        recipe.addPreparedIngredient(ingredient13);
 //        recipeRepository.save(recipe);
 
-        recipe.setPreparedIngredients(ingredientList);
-        recipeRepository.save(recipe);
+//        recipe.setPreparedIngredients(ingredientList);
+//        recipeRepository.save(recipe);
 
         recipe.addInstruction("1. Heat the oven. Spread out the aubergine on a roasting tin and drizzle with the oil and some seasoning. Roast for 15-20 mins.");
         recipeRepository.save(recipe);
@@ -179,8 +197,8 @@ public class DataLoader implements ApplicationRunner {
         recipe.addTag(Tags.Curry);
         recipeRepository.save(recipe);
 
-        recipe.setCalories(recipe.calculateTotalCalories());
-        recipeRepository.save(recipe);
+//        recipe.setCalories(recipe.calculateTotalCalories());
+//        recipeRepository.save(recipe);
 
     }
 

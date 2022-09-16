@@ -4,6 +4,7 @@ import com.example.server.models.Enums.IngredientType;
 import com.example.server.models.Enums.Measurement;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,9 +33,19 @@ public class Ingredient {
     private Measurement measurement_type;
 
 //    @JsonIgnoreProperties({"ingredients"})
+//    @JsonBackReference
+//    @OneToMany(mappedBy="ingredient", fetch = FetchType.LAZY)
+//    private List<PreparedIngredient> preparedIngredients;
+
     @JsonBackReference
-    @OneToMany(mappedBy="ingredient", fetch = FetchType.LAZY)
-    private List<PreparedIngredient> preparedIngredients;
+    @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinTable(
+            name = "recipes_ingredients",
+            joinColumns = {@JoinColumn(name = "ingredient_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name="recipe_id", nullable = false, updatable = false)}
+    )
+    private List<Recipe> recipes;
 
     public Ingredient (String name, IngredientType type, Double calories, Measurement measurement_type) {
         this.name = name;
@@ -42,7 +53,7 @@ public class Ingredient {
         this.calories = calories;
         this.measurement = 1;
         this.measurement_type = measurement_type;
-        this.preparedIngredients = new ArrayList<>();
+        this.recipes = new ArrayList<>();
     }
 
     public Ingredient () {
@@ -98,11 +109,11 @@ public class Ingredient {
         this.id = id;
     }
 
-    public List<PreparedIngredient> getPreparedIngredients() {
-        return preparedIngredients;
+    public List<Recipe> getRecipes() {
+        return recipes;
     }
 
-    public void setPreparedIngredients(List<PreparedIngredient> preparedIngredients) {
-        this.preparedIngredients = preparedIngredients;
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 }

@@ -9,10 +9,10 @@ const SelectedRecipe = ({recipe}) => {
     return (
         <div className="selected-recipe">
             <h1>{recipe.name}</h1>
-            <p>Calories: {calories} kcal</p>
+            {/* <p>Calories: {calories} kcal</p> */}
             <p>Cooking Time: {recipe.cooking_time} mins</p>
             <div>
-                <RecipeIngredientList ingredientList={recipe.preparedIngredients} />
+                <RecipeIngredientList ingredientList={recipe.ingredients} />
                 <InstructionList instructionList={recipe.instructions} />
             </div>
         </div>

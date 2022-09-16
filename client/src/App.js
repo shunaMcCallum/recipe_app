@@ -23,7 +23,8 @@ function App() {
 
   const getRecipes = () => {
     Request.get('http://localhost:8080/recipes/')
-      .then(recipeData => setRecipes(recipeData))
+      .then(recipeData => setRecipes(recipeData))      
+    // .then(recipeData => console.log(recipeData[0].preparedIngredients))
   }
 
   // Handle recipe navigation
@@ -40,15 +41,22 @@ function App() {
   }
 
   const createRecipe = (recipe) => {
-    console.log("create recipe called", recipe);
+    // console.log(recipe);
     Request.post('http://localhost:8080/recipes/', recipe)
       // .then(() => window.location = '/recipes/');
   }
 
-  const createPreparedIngredient = (preparedIngredient) => {
-    console.log("create prepared ingredient called", preparedIngredient);
-    Request.post('http://localhost:8080/prepared_ingredients/', preparedIngredient)
+  const updateRecipe = (recipe, id) => {
+    const url = 'http://localhost:8080/recipes/' + id;
+    // console.log(recipe);
+    Request.put(url, recipe)
+    // .then(() => window.location = '/recipes/');
   }
+
+  // const createPreparedIngredient = (preparedIngredient) => {
+  //   // console.log(preparedIngredient);
+  //   Request.post('http://localhost:8080/prepared_ingredients/', preparedIngredient)
+  // }
 
   // Import ingredient data
   useEffect(() => {
@@ -74,7 +82,7 @@ function App() {
   }
 
   const createIngredient = (ingredient) => {
-    console.log("create ingredient called", ingredient);
+    // console.log("create ingredient called", ingredient);
     Request.post('http://localhost:8080/ingredients/', ingredient)
     .then(() => window.location = '/ingredients/');
   }
@@ -87,7 +95,7 @@ function App() {
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/recipes" element={<RecipeContainer recipes={recipes} />} />
           <Route path="/recipes/:id" element={<RecipeWrapper />} />
-          <Route exact path="/recipes/new" element={<RecipeForm onCreate={createRecipe} onPreparedIngredient={createPreparedIngredient} ingredients={ingredients} />} />
+          <Route exact path="/recipes/new" element={<RecipeForm onCreate={createRecipe} onUpdate={updateRecipe} ingredients={ingredients} />} />
           <Route exact path="/ingredients" element={<IngredientContainer ingredients={ingredients} />} />
           <Route path="/ingredients/:id" element={<IngredientWrapper />} />
           <Route exact path="/ingredients/new" element={<IngredientForm onCreate={createIngredient} />} />

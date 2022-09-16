@@ -5,7 +5,7 @@ const RecipeIngredientListItem = ({ingredient}) => {
 
     return (
         <div className="recipe-ingredient-list-item">
-            <p>{ingredient.ingredient.name} - {ingredient.measurement} {ingredient.measurementType}, {ingredient.preparation}</p>
+            <p>{ingredient.name}</p>
         </div>
     )
 }

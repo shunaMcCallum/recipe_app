@@ -1,17 +1,87 @@
 import React, { useEffect, useState } from 'react';
 import Request from '../../../helpers/request';
 
-const RecipeForm = ({ onCreate, onPreparedIngredient, ingredients }) => {
+const RecipeForm = ({ onCreate, onUpdate, ingredients }) => {
 
     const [meals, setMeals] = useState([]);
     const [tags, setTags] = useState([]);
     const [measurementTypes, setMeasurementTypes] = useState([]);
 
-    const [recipe, setRecipe] = useState({});
-    const [preparedIngredient, setPreparedIngredient] = useState({});
-    const [preparedIngredientsList, setPreparedIngredientsList] = useState([]);
+    const [recipe, setRecipe] = useState({
+        // name: "",
+        // meal: "",
+        // calories: 0,
+        // portions: 0,
+        // preparedIngredients: [],
+        // cooking_time: 0,
+        // instructions: [],
+        // tags: []
+    });
+    const [ingredient, setIngredient] = useState({});
+    const [ingredientList, setIngredientList] = useState([]);
 
+    // const [preparedIngredient, setPreparedIngredient] = useState({
+        // ingredient: {},
+        // measurement: 0,
+        // measurementType: "",
+        // preparation: "",
+        // caloriesPerPreparedIngredient: 0
+    // });
+    // const [preparedIngredientsList, setPreparedIngredientsList] = useState([]);
     const [ingredientFormValues, setIngredientFormValues] = useState([{}]);
+
+    // const [toggleForm, setToggleForm] = useState(false);
+    // const [toggleButton, setToggleButton] = useState(false);
+
+    const [recipes, setRecipes] = useState([]);
+    // const [prepared_ingredients, setPrepared_ingredients] = useState([]);
+    const [id, setId] = useState(null);
+
+    const getRecipes = () => {
+        Request.get('http://localhost:8080/recipes/')
+        .then(recipeData => findRecipeByName(recipeData))
+        
+    }
+
+    const findRecipeByName = (recipeList) => {
+    for (let item of recipeList) {
+        if (item.name === recipe.name) {
+            setRecipe(item);
+            }
+        }
+    }
+
+    const getRecipeId = () => {
+        Request.get('http://localhost:8080/recipes/')
+            .then(recipeData => findRecipeId(recipeData))
+    }
+
+    const findRecipeId = (recipeList) => {
+        let id = null;
+        for (let item of recipeList) {
+            if (item.name === recipe.name) {
+                id = item.id
+            }
+        }
+        setId(id);
+    }
+
+    // const getPreparedIngredients = () => {
+    //     Request.get('http://localhost:8080/prepared_ingredients/')
+    //         .then(data => findByName(data))
+    // }
+
+    // const findByName = (list) => {
+    //     const newList = []
+    //     for (let item of list) {
+    //         for (let element of preparedIngredientsList) {
+    //             if (item.name === element.name)
+    //                 newList.push(item)
+    //         }
+    //     }
+    //     setPreparedIngredientsList(newList);
+    // }
+
 
     // fetch eNums from backend
     useEffect(() => {
@@ -62,47 +132,92 @@ const RecipeForm = ({ onCreate, onPreparedIngredient, ingredients }) => {
         const index = parseInt(event.target.value)
         const selectedTag = tags[index]
         let copiedRecipe = { ...recipe };
-        copiedRecipe['tags'] = selectedTag
+        copiedRecipe['tags'] = [];
+        copiedRecipe['tags'].push(selectedTag);
+        setRecipe(copiedRecipe)
+    }
+
+    const handleInstructions = (event) => {
+        let copiedRecipe = { ...recipe }
+        copiedRecipe['instructions'] = [];
+        copiedRecipe['instructions'].push(event.target.value);
         setRecipe(copiedRecipe)
     }
 
     // submitting prepared ingredients
-    const handlePreparedIngredientChange = (index, event) => {
-        let data = [...ingredientFormValues];
-        data[index][event.target.name] = event.target.value
-        setPreparedIngredient(data);
-    }
+    // const handlePreparedIngredientChange = (index, event) => {
+    //     let data = [...ingredientFormValues];
+    //     data[index][event.target.name] = event.target.value
+    //     setPreparedIngredient(data);
 
-    const handleIngredients = function (index, event) {
+    //     const copiedList = preparedIngredientsList;
+    //     copiedList[index] = data;
+    //     setPreparedIngredientsList(copiedList);
+    // }
+
+    // const handleIngredients = function (index, event) {
+    //     const i = parseInt(event.target.value)
+    //     const selectedIngredient = ingredients[i]
+
+    //     let data = [...ingredientFormValues];
+    //     data[index][event.target.name] = selectedIngredient
+    //     setPreparedIngredient(data)
+
+    //     const copiedList = preparedIngredientsList;
+    //     copiedList[index] = data;
+    //     setPreparedIngredientsList(copiedList);
+    // }
+
+    // const handleMeasurementType = function (index, event) {
+    //     const i = parseInt(event.target.value)
+    //     const selectedType = measurementTypes[i]
+
+    //     let data = [...ingredientFormValues];
+    //     data[index][event.target.name] = selectedType
+    //     setPreparedIngredient(data)
+
+    //     const copiedList = preparedIngredientsList;
+    //     copiedList[index] = data;
+    //     setPreparedIngredientsList(copiedList);
+    // }
+
+    // const handleAllPreparedIngredientsSubmit = function (event) {
+    //     event.preventDefault();
+
+    //     // let copiedRecipe = { ...recipe };
+    //     // copiedRecipe['prepared_ingredients'] = [];
+    //     ingredientFormValues.forEach((element) => {
+    //         // copiedRecipe.prepared_ingredients.push(element);
+    //         onPreparedIngredient(element);
+    //     })
+
+    //     // getPreparedIngredients();
+    //     // copiedRecipe.prepared_ingredients = preparedIngredientsList;
+    //     // setRecipe(copiedRecipe);
+    // }
+
+        const handleIngredientSelect = function (index, event) {
         const i = parseInt(event.target.value)
         const selectedIngredient = ingredients[i]
 
-        let data = [...ingredientFormValues];
-        data[index][event.target.name] = selectedIngredient
-        setPreparedIngredient(data)
+        // let data = [...ingredientFormValues];
+        // data[index][event.target.name] = selectedIngredient
+        // setIngredient(data)
+
+        const copiedList = ingredientList;
+        // copiedList[index] = data;
+            copiedList.push(selectedIngredient);
+        setIngredientList(copiedList);
     }
 
-    const handleMeasurementType = function (index, event) {
-        const i = parseInt(event.target.value)
-        const selectedType = measurementTypes[i]
-
-        let data = [...ingredientFormValues];
-        data[index][event.target.name] = selectedType
-        setPreparedIngredient(data)
-
-    }
-
-    const handleAllPreparedIngredientsSubmit = function (event) {
+    const handleIngredientsSubmit = function (event) {
         event.preventDefault();
 
-        ingredientFormValues.forEach((element) => {
-            element['recipe'] = recipe;
-            onPreparedIngredient(element);
-            preparedIngredientsList.push(element);
-        })
-
         let copiedRecipe = { ...recipe };
-        copiedRecipe['preparedIngredients'] = preparedIngredientsList;
+        copiedRecipe['ingredients'] = [];
+        ingredientList.forEach((element) => {
+            copiedRecipe.ingredients.push(element)
+        })
         setRecipe(copiedRecipe);
     }
 
@@ -110,7 +225,6 @@ const RecipeForm = ({ onCreate, onPreparedIngredient, ingredients }) => {
     const addAnotherIngredient = function () {
         setIngredientFormValues([...ingredientFormValues, {}])
     }
-
 
     // create recipe
     const handleSubmit = function (event) {
@@ -139,7 +253,7 @@ const RecipeForm = ({ onCreate, onPreparedIngredient, ingredients }) => {
 
     return (
         <div className="recipe-form">
-            <form onSubmit={handleSubmit}>
+            {/* <form onSubmit={handleSubmit}> */}
                 <input type="text" placeholder="Recipe name" name="name" onChange={handleChange} defaultValue={recipe.name} />
                 <select name="type" onChange={handleMeal} defaultValue="select-meal">
                     <option disabled value="select-meal">Select a meal</option>
@@ -147,35 +261,41 @@ const RecipeForm = ({ onCreate, onPreparedIngredient, ingredients }) => {
                 </select>
                 <input type="number" placeholder="Number of portions" name="portions" onChange={handleChange} defaultValue={recipe.portions} />
                 <input type="number" step="0.01" placeholder="Cooking time" name="cooking_time" onChange={handleChange} defaultValue={recipe.cooking_time} />
-                
                 <br />
-                <br />
-                
+            <br />
+            {/* {toggleButton ?  */}
+            
+            {/* //  {toggleForm ? */}
+                {/* // : null} */}
+
                 <p>Add ingredients:</p>
+                <form onSubmit={handleIngredientsSubmit}>
                 {ingredientFormValues.map((element, index) => {
                     return (
                         <div key={index}>
-                            <select name="ingredient" onChange={event => handleIngredients(index, event)} defaultValue={"select-ingredient"} >
+                            <select name="ingredient" onChange={event => handleIngredientSelect(index, event)} defaultValue={"select-ingredient"} >
                                 <option disabled value="select-ingredient">Select an ingredient</option>
                                 {ingredientsOptions}
                             </select>
-                            <input type="number" step="0.01" placeholder="Measurement" name="measurement" onChange={event => handlePreparedIngredientChange(index, event)} defaultValue={element.measurement} />
-                            <select name="measurementType" onChange={event => handleMeasurementType(index, event)} defaultValue={"select-measurement-type"}>
-                                <option disabled value="select-measurement-type">Select a measurement type</option>
-                                {measurementTypeOptions}
-                            </select>
-                            <input type="text" placeholder="Preparation" name="preparation" onChange={event => handlePreparedIngredientChange(index, event)} defaultValue={element.preparation} />
+                            {/* <input type="number" step="0.01" placeholder="Measurement" name="measurement" onChange={event => handlePreparedIngredientChange(index, event)} defaultValue={element.measurement} /> */}
+                            {/* <select name="measurementType" onChange={event => handleMeasurementType(index, event)} defaultValue={"select-measurement-type"}> */}
+                                {/* <option disabled value="select-measurement-type">Select a measurement type</option> */}
+                                {/* {measurementTypeOptions} */}
+                            {/* </select> */}
+                            {/* <input type="text" placeholder="Preparation" name="preparation" onChange={event => handlePreparedIngredientChange(index, event)} defaultValue={element.preparation} /> */}
                             <br />
                         </div>)
                 })}
                 <button onClick={addAnotherIngredient}>Add another ingredient</button>
                 <br />
-                <button onClick={handleAllPreparedIngredientsSubmit}>Submit ingredients</button>
+                <button type="submit">Submit ingredients</button>
+                </form>
 
                 {/* TAGS */}
                 <br />
                 <br />
                 <p>Add tag:</p>
+                    <form>
                 <select name="tags" onChange={handleTags} defaultValue="select-tag">
                     <option disabled value="select-tag">Select a tag</option>
                     {tagsOptions}
@@ -185,13 +305,14 @@ const RecipeForm = ({ onCreate, onPreparedIngredient, ingredients }) => {
                 <br />
                 <br />
                 <p>Add instruction:</p>
-                <input type="text" placeholder="Instructions" name="instructions" onChange={handleChange} defaultValue={recipe.instructions} />
+                <input type="text" placeholder="Instructions" name="instructions" onChange={handleInstructions} defaultValue={recipe.instructions} />
+                </form>
 
                 <br />
                 <br />
             
                 <button onClick={handleSubmit}>Create Recipe</button>
-            </form>
+            {/* </form> */}
 
         </div>
     )

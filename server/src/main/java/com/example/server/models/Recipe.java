@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.example.server.models.Enums.Meal;
 import com.example.server.models.Enums.Tags;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "recipes")
@@ -27,9 +28,21 @@ public class Recipe {
     @Column(name="portions")
     private int portions;
 
+//    @JsonIgnoreProperties({"recipes"})
+////    @JsonBackReference
+//    @OneToMany(mappedBy="recipe", fetch = FetchType.LAZY)
+//    private ArrayList<PreparedIngredient> prepared_ingredients;
+
     @JsonIgnoreProperties({"recipes"})
-    @OneToMany(mappedBy="recipe", fetch = FetchType.LAZY)
-    private List<PreparedIngredient> preparedIngredients;
+    @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    @JoinTable(
+            name = "recipes_ingredients",
+            joinColumns = {@JoinColumn(name = "recipe_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "ingredient_id", nullable = false, updatable = false)}
+    )
+    private List<Ingredient> ingredients;
+
     @Column(name="cooking_time")
     private int cooking_time;
     @Column(name="instructions")
@@ -37,15 +50,55 @@ public class Recipe {
     @Column(name="tags")
     private ArrayList<Tags> tags;
 
-    public Recipe (String name, Meal meal, int cooking_time, int portions) {
+//    public Recipe (String name, Meal meal, int cooking_time, int portions, Double calories, ArrayArrayList<PreparedIngredient> prepared_ingredients, ArrayArrayList<String> instructions, ArrayArrayList<Tags> tags) {
+//        this.name = name;
+//        this.meal = meal;
+//        this.cooking_time = cooking_time;
+//        this.portions = portions;
+//        this.calories = calories;
+//        this.prepared_ingredients = prepared_ingredients;
+//        this.instructions = instructions;
+//        this.tags = tags;
+//    }
+
+    public Recipe (String name, Meal meal, int cooking_time, int portions, Double calories, List<Ingredient> ingredients, ArrayList<String> instructions, ArrayList<Tags> tags) {
         this.name = name;
         this.meal = meal;
-        this.calories = 0.0;
-        this.portions = portions;
-        this.preparedIngredients = new ArrayList<>();
         this.cooking_time = cooking_time;
-        this.instructions = new ArrayList<>();
-        this.tags = new ArrayList<>();
+        this.portions = portions;
+        this.calories = calories;
+        this.ingredients = ingredients;
+        this.instructions = instructions;
+        this.tags = tags;
+    }
+
+    public Recipe (String name, Meal meal, int cooking_time, int portions, Double calories, List<Ingredient> ingredients, ArrayList<String> instructions) {
+        this(name, meal, cooking_time, portions, calories, ingredients, instructions, new ArrayList<Tags>());
+    }
+
+    public Recipe (String name, Meal meal, int cooking_time, int portions, Double calories, List<Ingredient> ingredients) {
+        this(name, meal, cooking_time, portions, calories, ingredients, new ArrayList<String>());
+    }
+
+    public Recipe (String name, Meal meal, int cooking_time, int portions, Double calories) {
+        this(name, meal, cooking_time, portions, calories, new ArrayList<>());
+    }
+
+    public Recipe (String name, Meal meal, int cooking_time, int portions) {
+        this(name, meal, cooking_time, portions, 0.0);
+//        this.calculateTotalCalories();
+    }
+
+    public Recipe (String name, Meal meal, int cooking_time) {
+        this(name, meal, cooking_time, 1);
+    }
+
+    public Recipe (String name, Meal meal) {
+        this(name, meal, 0);
+    }
+
+    public Recipe (String name) {
+        this(name, null);
     }
 
     public Recipe() {
@@ -124,30 +177,39 @@ public class Recipe {
         this.id = id;
     }
 
-    public List<PreparedIngredient> getPreparedIngredients() {
-        return preparedIngredients;
+    public List<Ingredient> getIngredients() {
+        return ingredients;
     }
 
-    public void setPreparedIngredients(List<PreparedIngredient> preparedIngredients) {
-        this.preparedIngredients = preparedIngredients;
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
-    public void addPreparedIngredient(PreparedIngredient preparedIngredient) {
-        this.preparedIngredients.add(preparedIngredient);
-    }
 
-    public Double calculateTotalCalories() {
-        Double total = 0.00;
-
-        for (int i = 0; i < this.preparedIngredients.size(); i++) {
-            total += this.preparedIngredients.get(i).getCaloriesPerPreparedIngredient() * this.portions;
-        }
-        return total;
-    }
-
-    public Double calculatePreparedIngredientMeasurementForVaryingPortions(PreparedIngredient preparedIngredient) {
-        return preparedIngredient.getMeasurement() * this.portions;
-    }
+//    public ArrayList<PreparedIngredient> getPrepared_ingredients() {
+//        return prepared_ingredients;
+//    }
+//
+//    public void setPrepared_ingredients(ArrayList<PreparedIngredient> prepared_ingredients) {
+//        this.prepared_ingredients = prepared_ingredients;
+//    }
+//
+//    public void addPreparedIngredient(PreparedIngredient preparedIngredient) {
+//        this.prepared_ingredients.add(preparedIngredient);
+//    }
+//
+//    public Double calculateTotalCalories() {
+//        Double total = 0.00;
+//
+//        for (int i = 0; i < this.prepared_ingredients.size(); i++) {
+//            total += this.prepared_ingredients.get(i).getCaloriesPerPreparedIngredient() * this.portions;
+//        }
+//        return total;
+//    }
+//
+//    public Double calculatePreparedIngredientMeasurementForVaryingPortions(PreparedIngredient preparedIngredient) {
+//        return preparedIngredient.getMeasurement() * this.portions;
+//    }
 }
 
 

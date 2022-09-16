@@ -3,6 +3,8 @@ package com.example.server.repositories;
 import com.example.server.models.Recipe;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RecipeRepository extends JpaRepository<Recipe, Long> {
+import java.util.List;
 
+public interface RecipeRepository extends JpaRepository<Recipe, Long> {
+    List<Recipe> findByName(String name);
 }

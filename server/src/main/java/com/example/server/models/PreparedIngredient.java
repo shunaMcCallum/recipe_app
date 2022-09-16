@@ -31,18 +31,28 @@ public class PreparedIngredient {
     @ManyToOne
     @JoinColumn(name="recipe_id", nullable = true)
     @JsonBackReference
+//    @JsonIgnoreProperties({"prepared_ingredients"})
     private Recipe recipe;
 
     private Double caloriesPerPreparedIngredient;
 
 
-    public PreparedIngredient(Ingredient ingredient, Double measurement, Measurement measurementType, String preparation, Recipe recipe) {
+    public PreparedIngredient(Ingredient ingredient, Double measurement, Measurement measurementType, String preparation, Recipe recipe, Double calories) {
         this.ingredient = ingredient;
         this.measurement = measurement;
         this.measurementType = measurementType;
         this.preparation = preparation;
         this.recipe = recipe;
-//        this.caloriesPerPreparedIngredient = 0.0;
+        this.caloriesPerPreparedIngredient = calories;
+    }
+
+    public PreparedIngredient(Ingredient ingredient, Double measurement, Measurement measurementType, String preparation, Recipe recipe) {
+        this(ingredient, measurement, measurementType, preparation, recipe, 0.0);
+        this.setCaloriesPerPreparedIngredient();
+    }
+
+    public PreparedIngredient(Ingredient ingredient, Double measurement, Measurement measurementType, String preparation) {
+        this(ingredient, measurement, measurementType, preparation, null);
         this.setCaloriesPerPreparedIngredient();
     }
 
