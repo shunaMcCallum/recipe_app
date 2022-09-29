@@ -30,58 +30,6 @@ const RecipeForm = ({ onCreate, onUpdate, ingredients }) => {
     // const [preparedIngredientsList, setPreparedIngredientsList] = useState([]);
     const [ingredientFormValues, setIngredientFormValues] = useState([{}]);
 
-    // const [toggleForm, setToggleForm] = useState(false);
-    // const [toggleButton, setToggleButton] = useState(false);
-
-    const [recipes, setRecipes] = useState([]);
-    // const [prepared_ingredients, setPrepared_ingredients] = useState([]);
-    const [id, setId] = useState(null);
-
-    const getRecipes = () => {
-        Request.get('http://localhost:8080/recipes/')
-        .then(recipeData => findRecipeByName(recipeData))
-        
-    }
-
-    const findRecipeByName = (recipeList) => {
-    for (let item of recipeList) {
-        if (item.name === recipe.name) {
-            setRecipe(item);
-            }
-        }
-    }
-
-    const getRecipeId = () => {
-        Request.get('http://localhost:8080/recipes/')
-            .then(recipeData => findRecipeId(recipeData))
-    }
-
-    const findRecipeId = (recipeList) => {
-        let id = null;
-        for (let item of recipeList) {
-            if (item.name === recipe.name) {
-                id = item.id
-            }
-        }
-        setId(id);
-    }
-
-    // const getPreparedIngredients = () => {
-    //     Request.get('http://localhost:8080/prepared_ingredients/')
-    //         .then(data => findByName(data))
-    // }
-
-    // const findByName = (list) => {
-    //     const newList = []
-    //     for (let item of list) {
-    //         for (let element of preparedIngredientsList) {
-    //             if (item.name === element.name)
-    //                 newList.push(item)
-    //         }
-    //     }
-    //     setPreparedIngredientsList(newList);
-    // }
-
 
     // fetch eNums from backend
     useEffect(() => {
@@ -196,16 +144,11 @@ const RecipeForm = ({ onCreate, onUpdate, ingredients }) => {
     //     // setRecipe(copiedRecipe);
     // }
 
-        const handleIngredientSelect = function (index, event) {
+        const handleIngredientSelect = function (event) {
         const i = parseInt(event.target.value)
         const selectedIngredient = ingredients[i]
 
-        // let data = [...ingredientFormValues];
-        // data[index][event.target.name] = selectedIngredient
-        // setIngredient(data)
-
         const copiedList = ingredientList;
-        // copiedList[index] = data;
             copiedList.push(selectedIngredient);
         setIngredientList(copiedList);
     }
@@ -253,7 +196,6 @@ const RecipeForm = ({ onCreate, onUpdate, ingredients }) => {
 
     return (
         <div className="recipe-form">
-            {/* <form onSubmit={handleSubmit}> */}
                 <input type="text" placeholder="Recipe name" name="name" onChange={handleChange} defaultValue={recipe.name} />
                 <select name="type" onChange={handleMeal} defaultValue="select-meal">
                     <option disabled value="select-meal">Select a meal</option>
@@ -263,11 +205,7 @@ const RecipeForm = ({ onCreate, onUpdate, ingredients }) => {
                 <input type="number" step="0.01" placeholder="Cooking time" name="cooking_time" onChange={handleChange} defaultValue={recipe.cooking_time} />
                 <br />
             <br />
-            {/* {toggleButton ?  */}
             
-            {/* //  {toggleForm ? */}
-                {/* // : null} */}
-
                 <p>Add ingredients:</p>
                 <form onSubmit={handleIngredientsSubmit}>
                 {ingredientFormValues.map((element, index) => {
@@ -312,8 +250,6 @@ const RecipeForm = ({ onCreate, onUpdate, ingredients }) => {
                 <br />
             
                 <button onClick={handleSubmit}>Create Recipe</button>
-            {/* </form> */}
-
         </div>
     )
 }
